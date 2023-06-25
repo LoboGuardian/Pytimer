@@ -3,10 +3,20 @@ import time
 import os
 import pygame
 
-audio='clock_01.ogg'
+bg_color = "#333333"
+fg_color = "#FFFFFF"
+
+clock='clock_01.ogg'
+relaxing = 'Meditate.opus'
+audio = 'clock_02.ogg'
 
 pygame.init()
-sound = pygame.mixer.Sound(audio)
+sound = pygame.mixer.Sound(clock)
+cheers = pygame.mixer.Sound(audio)
+relax = pygame.mixer.Sound(relaxing)
+
+def clear():
+    os.system("clear||cls")
 
 def convert(t):
     return t * 60
@@ -20,12 +30,11 @@ def countdown(t, label):
         root.update()
         time.sleep(1)
         t -= 1
-        sound.play()
-        # if t == 0 and running:
-        #     sound.play()
+        if label == "Work":
+            sound.play()
+        elif label == "Rest":
+            relax.play()
         
-
-
 def pause_timer():
     # Detiene el temporizador
     global running
@@ -44,10 +53,12 @@ def pomodoro():
     rest_entry.pack_forget()
     start_button.pack_forget()
     pause_button.pack()
+    clear()
     countdown(w, "Work")
-    os.system("cls")
+    clear()
+    cheers.play()
     countdown(r, "Rest")
-    os.system("cls")
+    clear()
     #work_label.pack()
     #work_entry.pack()
     #rest_label.pack()
@@ -59,25 +70,27 @@ root = tk.Tk()
 root.title("Pomodoro Timer")
 root.resizable(False, False)
 #root.geometry("100x200")
-root.configure(padx=15, pady=15) # Agrega un margen de 15px en los bordes
+root.configure(padx=15, pady=15, bg=bg_color) # Agrega un margen de 15px en los bordes
 
-work_label = tk.Label(root, text="Work time (min):")
+work_label = tk.Label(root, text="Work time (min):", fg=fg_color)
 #work_label.pack()
 work_entry = tk.Entry(root)
 #work_entry.pack()
 
-rest_label = tk.Label(root, text="Rest time (min):")
+rest_label = tk.Label(root, text="Rest time (min):", fg=fg_color)
 # rest_label.pack()
 rest_entry = tk.Entry(root)
 # rest_entry.pack()
 
-start_button = tk.Button(root, text="Start", command=pomodoro)
+start_button = tk.Button(root, text="Start", command=pomodoro,)
+time.sleep(3)
 start_button.pack()
 
-timer_label = tk.Label(root, text="00:00", font=("Courier", 50))
+timer_label = tk.Label(root, text="00:00", font=("Courier", 30),)
 timer_label.pack()
 
-pause_button = tk.Button(root, text="Pause", command=pause_timer)
+pause_button = tk.Button(root, text="Pause", command=pause_timer,)
+time.sleep(1)
 pause_button.pack()
 
 root.mainloop()

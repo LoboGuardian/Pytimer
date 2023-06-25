@@ -4,6 +4,9 @@ import os
 work=45
 rest=15
 
+def clear():
+    os.system("clear||cls")
+
 def convert(t):
     return t * 60
 
@@ -21,11 +24,11 @@ def pomodoro(work, rest):
     # convert min to sec
     w = convert(work)
     r = convert(rest)
-    os.system("clear||cls")
+    clear()
     countdown(w, "Work")
-    os.system("clear||cls")
+    clear()
     countdown(r, "Rest")
-    os.system("clear||cls")
+    clear()
 
 #work = int(input("Enter work time (min): "))
 #rest = int(input("Enter rest time (min): "))
